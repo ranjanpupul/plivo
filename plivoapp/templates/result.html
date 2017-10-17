@@ -1,7 +1,47 @@
-{% block siteTitle %}Re{% endblock %}
-{% block pageTitle %}Reult Response{% endblock %}
+<!DOCTYPE html>
+<!--[if IE 8]>      <html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>      <html class="ie ie9"> <![endif]-->
+<html>
+
+<head>
 {% block content  %}
-     
-<h1>hello</h1>
-{{context}}
+    <title>Plivo Task</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>Message Details</h2>
+    <p>API id is:-  {{api_id}}</p>
+    <p>Message Uid is : - {{message_uuid}}</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+          <td>S.No</td>
+        <th>Message State</th>
+        <th>Totalamount</th>
+        <th>From No</th>
+         <th>TO number</th>
+          <th>Resp Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for message in value %}
+      <tr>
+          <td>{{forloop.counter}}</td>
+          <td> {{message.message_state}}</td>
+          <td>{{message.total_rate}}</td>
+          <td>{{message.from_number}}</td>
+          <td>{{message.to_number}}</td>
+          <td>{{APIStatus}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
 {% endblock %}
