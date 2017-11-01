@@ -14,9 +14,31 @@
 </head>
 <body>
 <div class="container">
+<table class="table table-striped">
+
+<div class="form-group">
+<form id="exit-form" class="form-horizontal" role="form" method="post" enctype="multipart/form-data" data-toggle="validator">
+                {% csrf_token %}
+ <td>To-Number{{ form.tonumber }}</td>
+  <td>From-Number{{form.fromnumber}}</td>
+  <td>Message{{form.message}}</td>
+  <td><input type="Submit" class="btn btn-primary"></input></td>
+</div>
+</form>
+</table>
+{% if messages %}
+              {% for message in messages %}
+               {% if message.tags == 'error' %}
+               <div class="alert alert-info">
+                <strong>info!</strong> {{message}},   Error code is :- {{code}}  ,Error is :{{error}}.
+               </div>
+               {%endif %}
+{% endfor %}
+{% endif %}
   <h2>Message Details</h2>
     <p>API id is:-  {{api_id}}</p>
     <p>Message Uid is : - {{message_uuid}}</p>
+    <p></p>
 <table class="table table-striped">
     <thead>
       <tr>
@@ -42,6 +64,23 @@
     </tbody>
   </table>
 </div>
+<script type="text/javascript">
+            $(function () {
+              $('.btn-primary').on('click', function(){
+                var to_number = $('#to_number').val();
+                var from_number = $('#from_number').val();
+                var message = $('#message').val();
+                // $.ajax({
+                //             url : "/message/update-hr-value/",
+                //             type : "GET",
+                //             data : { 'to_number':to_number, 'from_number':from_number,'message':message, },
+                //             success : function(json) {
+                            
+                //             }
+                //             });  
+                //             });  
+                            });       
+              </script>
 </body>
 </html>
 {% endblock %}

@@ -1,7 +1,8 @@
 from django.conf.urls import include, url
-from plivoapp.views import sendmessage
+from plivoapp.views import  PostMessage
 
 
 urlpatterns = [
-    url(r'^statusmessage', sendmessage),
+    url(r'^statusmessage', PostMessage.as_view()),
+    
 ]
