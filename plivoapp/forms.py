@@ -6,7 +6,11 @@ class UserExitForm(forms.Form):
 	fromnumber= forms.IntegerField(required=True, label=('From Number'))
 
 	def __init__(self, *args, **kwargs):
-	    super(UserExitForm, self).__init__(*args, **kwargs)
-	    self.fields['tonumber'].widget.attrs['class'] = "form-control"
-	    self.fields['fromnumber'].widget.attrs['class'] = "form-control"
-	    self.fields['message'].widget.attrs['class'] = "form-control"
+		super(UserExitForm, self).__init__(*args, **kwargs)
+		self.fields['tonumber'].widget.attrs['class'] = "form-control"
+		self.fields['fromnumber'].widget.attrs['class'] = "form-control"
+		self.fields['message'].widget.attrs['class'] = "form-control"
+		self.fields['tonumber'].widget.attrs['required'] = "true"
+		self.fields['fromnumber'].widget.attrs['required'] = "true"
+		self.fields['message'].widget.attrs['required'] = "true"
+

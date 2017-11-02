@@ -6,26 +6,29 @@ from forms import UserExitForm
 from django.views.generic import View
 from django.contrib import messages
 
+
 class PostMessage(View):
     def get(self, request):
         try:
-
-           	context = {"form": "", "concent": ""}
-           	form = UserExitForm() 
-           	context["form"] = form
-        	auth_id = "MANTDLYTBLNWI5M2M1ZT"
-    		auth_token = "MDUyYzJhOWJiN2NiZmQ5NjYyM2MwYWVhMTAwYmU4"
-    		status = plivo.PlivoAPI(auth_id, auth_token)
-    		responses = status.get_messages()
-    		context['value'] = responses[1]['objects']
-    		context['APIStatus'] = responses[0]
-    		return render(request, "result.html", context)          
+            context = {"form": "", "concent": ""}
+            form = UserExitForm()
+            context["form"] = form
+            auth_id = "MANTDLYTBLNWI5M2M1ZT"
+            auth_token = "MDUyYzJhOWJiN2NiZmQ5NjYyM2MwYWVhMTAwYmU4"
+            status = plivo.PlivoAPI(auth_id, auth_token)
+            params = {
+                'limit': '1000',  # The number of results per page
+            }
+            responses = status.get_messages(params)
+            context['value'] = responses[1]['objects']
+            context['APIStatus'] = responses[0]
+            return render(request, "result.html", context)
            
         except Exception as programmingerror:
-        	context = {"form": ""}
-        	form = UserExitForm()
-        	context["form"] = form
-        	return render(request, "result.html", context)
+            context = {"form": ""}
+            form = UserExitForm()
+            context["form"] = form
+            return render(request, "result.html", context)
 
     def post(self, request):
         context = {"form": ""}
@@ -40,19 +43,24 @@ class PostMessage(View):
                 status = plivo.PlivoAPI(auth_id, auth_token)
                 params = {'src': tonumber, 'dst': fromnumber, 'text': 'u'+message, 'url': "http://example.com/report/", 'method': "POST", }
                 response = status.send_message(params)
-                if response[1]['error']:
-                	context['error']= response[1]['error']
-                	context['code']= response[0]
-                	messages.error(request, 'oops   something went wrong')
-                	context['form']  = UserExitForm()
-                	return render(request, "result.html", context)
-                context['message_uuid'] = (response[1]['message_uuid'])
-                context['api_id'] = (response[1]['api_id'])
-                responses = status.get_messages()
-                context['value'] = responses[1]['objects']
-                context['APIStatus'] = responses[0]
-                context['form']  = UserExitForm()
-                return render(request, 'result.html', context)
+                print response[1]
+                if 'error' in response[1]:
+                    context['error']= response[1]['error']
+                    context['code']= response[0]
+                    messages.error(request, 'oops   something went wrong')
+                    context['form']  = UserExitForm()
+                    return render(request, "result.html", context)
+                else:
+                    context['message_uuid'] = (response[1]['message_uuid'])
+                    context['api_id'] = (response[1]['api_id'])
+                    para = {
+                        'limit': '1000',  # The number of results per page
+                    }
+                    responses = status.get_messages(para)
+                    context['value'] = responses[1]['objects']
+                    context['APIStatus'] = responses[0]
+                    context['form']  = UserExitForm()
+                    return render(request, 'result.html', context)
             except Exception as e:
-               	print e
+                print e
         return render(request, "result.html", context)

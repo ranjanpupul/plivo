@@ -45,9 +45,10 @@
           <td>S.No</td>
         <th>Message State</th>
         <th>Totalamount</th>
+        <th>TO number</th>
         <th>From No</th>
-         <th>TO number</th>
           <th>Resp Status</th>
+          <th>Message Time</th>
       </tr>
     </thead>
     <tbody>
@@ -56,9 +57,10 @@
           <td>{{forloop.counter}}</td>
           <td> {{message.message_state}}</td>
           <td>{{message.total_rate}}</td>
-          <td>{{message.from_number}}</td>
           <td>{{message.to_number}}</td>
+          <td>{{message.from_number}}</td>
           <td>{{APIStatus}}</td>
+          <td>{{message.message_time}}</td>
       </tr>
     {% endfor %}
     </tbody>
