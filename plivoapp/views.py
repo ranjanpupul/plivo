@@ -43,7 +43,6 @@ class PostMessage(View):
                 status = plivo.PlivoAPI(auth_id, auth_token)
                 params = {'src': tonumber, 'dst': fromnumber, 'text': 'u'+message, 'url': "http://example.com/report/", 'method': "POST", }
                 response = status.send_message(params)
-                print response[1]
                 if 'error' in response[1]:
                     context['error']= response[1]['error']
                     context['code']= response[0]
